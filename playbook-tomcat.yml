@@ -1,0 +1,23 @@
+---
+- hosts: machine1
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: vagrant
+  tasks:
+    - name: updates a server
+      yum: name=* state=latest
+      become: yes
+      become_user: root
+    - name: install java
+      yum: name=default-jdk state=latest
+      become: yes
+      become_user: root
+    - name: install tomcat
+      yum: name=tomcat7 state=latest
+      become: yes
+      become_user: root
+    - name: make sure apache is running
+      service: name=tomcat7 state=started
+      become: yes
+      become_user: root
